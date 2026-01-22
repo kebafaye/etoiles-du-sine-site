@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://kebafaye.github.io/etoiles-du-sine-site/sitemap.xml
 
