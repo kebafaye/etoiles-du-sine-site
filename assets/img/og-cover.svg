@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Open Graph cover (placeholder)">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1320"/>
+      <stop offset="1" stop-color="#0B1F3B"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#D41F2A"/>
+      <stop offset="1" stop-color="#0A48A0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="28" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)"/>
+  <rect x="110" y="110" width="520" height="410" rx="22" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.10)"/>
+  <rect x="690" y="110" width="400" height="410" rx="22" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.10)"/>
+  <path d="M110 468C260 390 420 515 630 410V520H110V468Z" fill="url(#acc)" opacity=".18"/>
+  <text x="145" y="210" fill="#FFFFFF" font-size="44" font-family="Inter, system-ui, -apple-system, Segoe UI, Arial" font-weight="800">
+    Les Étoiles du Sine
+  </text>
+  <text x="145" y="268" fill="rgba(255,255,255,.78)" font-size="26" font-family="Inter, system-ui, -apple-system, Segoe UI, Arial" font-weight="600">
+    Construction " BTP " Immobilier
+  </text>
+  <text x="145" y="326" fill="rgba(255,255,255,.68)" font-size="20" font-family="Inter, system-ui, -apple-system, Segoe UI, Arial">
+    Rigueur " Normes " Délais " Qualité
+  </text>
+</svg>
