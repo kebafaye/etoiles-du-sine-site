@@ -230,6 +230,21 @@ section[id]{scroll-margin-top:92px}
     linear-gradient(180deg, rgba(5,8,13,.35), rgba(5,8,13,.8));
   z-index:2;
 }
+.hero__overlay::before{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  background:url("../assets/img/logo.jpeg") no-repeat center 58% / min(76vw, 840px);
+  filter:blur(7px) saturate(1.12) contrast(1.04);
+  opacity:.48;
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+
+body[data-theme="light"] .hero__overlay::before{
+  opacity:.32;
+  mix-blend-mode:multiply;
+}
 .hero__content{padding:4.5rem 0 3.5rem}
 .hero__eyebrow{
   display:inline-flex;
@@ -763,6 +778,11 @@ html.js [data-reveal].is-visible{
   .project img{height:190px}
   .map img{height:200px}
   .hero__stats{grid-template-columns:1fr}
+  .hero__overlay::before{
+    background-size:min(105vw, 560px);
+    filter:blur(6px) saturate(1.08) contrast(1.03);
+    opacity:.36;
+  }
 }
 
 /* Tablette : 2 colonnes dès ~600px pour éviter les longues pages */
