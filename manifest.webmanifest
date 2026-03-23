@@ -10,9 +10,9 @@
   "theme_color": "#0b1f3b",
   "icons": [
     {
-      "src": "assets/img/logo-mark.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "assets/img/logo.jpeg",
+      "sizes": "1024x683",
+      "type": "image/jpeg",
       "purpose": "any"
     }
   ]

@@ -1,4 +1,4 @@
-const CACHE_NAME = "eds-pwa-v2";
+const CACHE_NAME = "eds-pwa-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,7 +6,7 @@ const ASSETS = [
   "./js/main.js",
   "./manifest.webmanifest",
   "./assets/img/hero-placeholder.svg",
-  "./assets/img/logo-mark.svg",
+  "./assets/img/logo.jpeg",
   "./assets/img/og-cover.svg",
   "./assets/img/project-1.svg",
   "./assets/img/project-2.svg",
