@@ -229,9 +229,9 @@ function initHeroSlideshow() {
   const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
   const candidates = [
-    "https://scontent.fdkr7-1.fna.fbcdn.net/v/t39.30808-6/476838674_940483591550896_4367177843902797452_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeGMWKILsKWeW1N65CI8UfaZ88uKWntT4f3zy4pae1Ph_UZ5wGcr4Qyh7w5h9ehGxIn0U5QLTz4WNwX7m3k6ExCp&_nc_ohc=Be8Uk_xr0DwQ7kNvwHO_68V&_nc_oc=AdkqW5YkcrEz-V4d4NppT6vfejml3ZkhPGwxhF_jnhxuxcDHs3cLiSZQxY3b33SLNQM&_nc_zt=23&_nc_ht=scontent.fdkr7-1.fna&_nc_gid=ridk_NS6CmsQdu8l_lsh0w&oh=00_AfoNBuwyJTqGy8S8WOq6oFP_nt9RVL2H3rtDzlCCxM8wFQ&oe=6977D4ED",
-    "https://scontent.fdkr6-1.fna.fbcdn.net/v/t39.30808-6/480676895_649978704139133_2425968390186212160_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeHzMgcLtR1nBRMIgx_TWDJwPwyClneszvU_DIKWd6zO9aQtiP_6trbczA90NQAhR8i_SjsqhfgJk9g6EWquBC-t&_nc_ohc=hJfhlsdR_HoQ7kNvwHz-4No&_nc_oc=AdldsCVV6xJHWSWvDwXKZCXHh_mmzhf9ZVVKmVrjxjxTlX38UiKYJQB2KhNoVdh2u7s&_nc_zt=23&_nc_ht=scontent.fdkr6-1.fna&_nc_gid=wZR5mxp3r1geF-5Jx8oETw&oh=00_AfogYENeXY92Z3i2xRbnyU9q56oLW06HJSUc_gLudUZPVg&oe=6977F6C1",
-    "https://scontent.fdkr5-1.fna.fbcdn.net/v/t39.30808-6/528142317_774267498376919_8993634135189694578_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEN9tB4NJkdE8_92g0Bhc_pWgfx8VXz9hJaB_HxVfP2El5rJeTLfqO2siQAMVDdoNOQqa9jXkFLzMlVIzt_ulnM&_nc_ohc=4zZcmx9Kws4Q7kNvwHQgVsW&_nc_oc=AdnjDxEGJOagkd7D87KTHcHJNtieORy9FQaE7yVVrhvjJ-NtPHZRH0iFIuamP85BYBw&_nc_zt=23&_nc_ht=scontent.fdkr5-1.fna&_nc_gid=D7i5AHjLhmP9TOhK4e0QwA&oh=00_AfquGgikLVSsbmSirtBOKEN18sVeJ0pNUPfG7x1EQph4cg&oe=6977D428",
+    "assets/img/project-1.svg",
+    "assets/img/project-2.svg",
+    "assets/img/project-3.svg",
   ];
 
   const placeholder = "assets/img/hero-placeholder.svg";
@@ -283,7 +283,204 @@ function initHeroSlideshow() {
   });
 }
 
+function initThemeToggle() {
+  const btn = qs(".theme-toggle");
+  if (!btn) return;
+
+  const icon = qs("i", btn);
+  const key = "eds-theme";
+  const saved = localStorage.getItem(key);
+  if (saved === "light") document.body.setAttribute("data-theme", "light");
+
+  const syncLabel = () => {
+    const isLight = document.body.getAttribute("data-theme") === "light";
+    btn.setAttribute("aria-label", isLight ? "Activer le thème sombre" : "Activer le thème clair");
+    btn.title = isLight ? "Passer au thème sombre" : "Passer au thème clair";
+    if (icon) icon.className = isLight ? "fa-solid fa-sun" : "fa-solid fa-moon";
+  };
+
+  syncLabel();
+
+  btn.addEventListener("click", () => {
+    const isLight = document.body.getAttribute("data-theme") === "light";
+    if (isLight) {
+      document.body.removeAttribute("data-theme");
+      localStorage.setItem(key, "dark");
+    } else {
+      document.body.setAttribute("data-theme", "light");
+      localStorage.setItem(key, "light");
+    }
+    syncLabel();
+  });
+}
+
+function initSpotlightBackground() {
+  const bg = qs(".bg-spotlight");
+  if (!bg) return;
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      const x = `${Math.round((e.clientX / window.innerWidth) * 100)}%`;
+      const y = `${Math.round((e.clientY / window.innerHeight) * 100)}%`;
+      document.body.style.setProperty("--mx", x);
+      document.body.style.setProperty("--my", y);
+    },
+    { passive: true }
+  );
+}
+
+function initCounters() {
+  const counters = qsa("[data-counter]");
+  if (!counters.length) return;
+
+  const animate = (el) => {
+    const target = Number(el.getAttribute("data-counter"));
+    if (!Number.isFinite(target)) return;
+    const duration = 1200;
+    const start = performance.now();
+    const suffix = el.textContent.includes("%") ? "%" : el.textContent.includes("/7") ? "/7" : "";
+
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - (1 - p) ** 3;
+      const value = Math.round(target * eased);
+      el.textContent = `${value}${suffix}`;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animate(entry.target);
+        io.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.35 }
+  );
+
+  counters.forEach((el) => io.observe(el));
+}
+
+function initTiltCards() {
+  const cards = qsa(".innovation-card");
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      const rotX = (0.5 - y) * 8;
+      const rotY = (x - 0.5) * 10;
+      card.style.transform = `perspective(700px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+    });
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "none";
+    });
+  });
+}
+
+function initHeroCanvas() {
+  const canvas = qs("#hero-canvas");
+  if (!canvas) return;
+  const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  if (reduce) return;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const particles = [];
+  const count = 55;
+  let rafId = 0;
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+
+  const randomParticle = () => ({
+    x: Math.random() * canvas.clientWidth,
+    y: Math.random() * canvas.clientHeight,
+    vx: (Math.random() - 0.5) * 0.6,
+    vy: (Math.random() - 0.5) * 0.6,
+    r: 1 + Math.random() * 2.2,
+  });
+
+  const init = () => {
+    particles.length = 0;
+    for (let i = 0; i < count; i += 1) particles.push(randomParticle());
+  };
+
+  const draw = () => {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (let i = 0; i < particles.length; i += 1) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.fillStyle = "rgba(255,255,255,0.55)";
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    for (let i = 0; i < particles.length; i += 1) {
+      for (let j = i + 1; j < particles.length; j += 1) {
+        const a = particles[i];
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist > 120) continue;
+        const alpha = (1 - dist / 120) * 0.3;
+        ctx.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+    }
+
+    rafId = requestAnimationFrame(draw);
+  };
+
+  resize();
+  init();
+  draw();
+  window.addEventListener("resize", () => {
+    resize();
+    init();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else draw();
+  });
+}
+
+function initPwa() {
+  if (!("serviceWorker" in navigator)) return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  document.documentElement.classList.add("js");
   setYear();
   initHeaderShadow();
   initMobileNav();
@@ -291,5 +488,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initProjectFilters();
   initContactForm();
   initHeroSlideshow();
+  initThemeToggle();
+  initSpotlightBackground();
+  initCounters();
+  initTiltCards();
+  initHeroCanvas();
+  initPwa();
 });
 

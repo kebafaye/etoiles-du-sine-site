@@ -1,0 +1,19 @@
+{
+  "name": "Les Etoiles du Sine",
+  "short_name": "EtoilesSine",
+  "description": "Construction, BTP et immobilier - experience digitale moderne.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b1320",
+  "theme_color": "#0b1f3b",
+  "icons": [
+    {
+      "src": "assets/img/logo-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
